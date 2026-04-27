@@ -1,0 +1,451 @@
+// This is your Prisma schema file for MongoDB
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Models
+model Lead {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Contact Information
+  name          String
+  email         String
+  phone         String?
+  company       String?
+  projectType   String
+  message       String
+  fileUrl       String?
+
+  // Source Tracking
+  utmSource     String?
+  utmMedium     String?
+  utmCampaign   String?
+  referrerUrl   String?
+  landingPage   String
+  deviceType    String
+  ipAddress     String?
+
+  // Lead Management
+  status        String      @default("NEW") // NEW, CONTACTED, QUALIFIED, IN_PROGRESS, CONVERTED, LOST
+  assignedToId  String?     @db.ObjectId
+  assignedTo    User?       @relation(fields: [assignedToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // Compliance
+  consentGiven  Boolean     @default(false)
+  consentAt     DateTime?
+
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  notes         LeadNote[]
+}
+
+model LeadNote {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  leadId    String    @db.ObjectId
+  lead      Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  authorId  String    @db.ObjectId
+  author    User      @relation(fields: [authorId], references: [id])
+
+  note      String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model AnalyticsEvent {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Event Details
+  eventType   String
+  eventData   Json
+
+  // Page Context
+  pageUrl     String
+  pagePath    String
+  pageTitle   String?
+
+  // Session Context
+  sessionId   String
+  userId      String?
+
+  // Device Context
+  deviceType  String
+  browser     String?
+  os          String?
+
+  // Timestamp
+  timestamp   DateTime @default(now())
+}
+
+model UserSession {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId   String    @unique
+
+  // Journey
+  entryPage   String
+  exitPage    String?
+  pageViews   Int       @default(1)
+
+  // Duration
+  startedAt   DateTime  @default(now())
+  endedAt     DateTime?
+  duration    Int?
+
+  // Context
+  deviceType  String
+  location    String?
+  referrer    String?
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Authentication
+  email         String    @unique
+  passwordHash  String
+  accessCode    String?   // Plaintext code for CLIENT magic-code login
+
+  // Profile
+  name          String
+  role          String    @default("EDITOR") // ADMIN, EDITOR, VIEWER, CLIENT
+
+  // Status
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  assignedLeads       Lead[]
+  leadNotes           LeadNote[]
+  clientProjects      Project[] @relation("ClientProjects")
+  managedProjects     Project[] @relation("ManagedProjects")
+  uploadedFiles       ProjectFile[]
+  changeRequests      ChangeRequest[]
+  messages            Message[]
+  meetingRequests     MeetingRequest[]
+  approvalsRequested  Approval[]      @relation("ApprovalRequestedBy")
+  approvalsReviewed   Approval[]      @relation("ApprovalReviewedBy")
+  approvalComments    ApprovalComment[]
+  launchChecklistUpdates LaunchChecklist[] @relation("LaunchChecklistUpdatedBy")
+}
+
+model Project {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Basic Info
+  name            String
+  description     String
+  scope           String
+
+  // Status & Progress
+  status          String    @default("PLANNING") // PLANNING, IN_PROGRESS, ON_HOLD, COMPLETED, CANCELLED
+  progress        Int       @default(0) // 0-100
+
+  // Relations
+  clientId        String    @db.ObjectId
+  client          User      @relation("ClientProjects", fields: [clientId], references: [id], onDelete: Cascade)
+
+  managerId       String    @db.ObjectId
+  manager         User      @relation("ManagedProjects", fields: [managerId], references: [id])
+
+  // Timeline
+  startDate       DateTime?
+  expectedEndDate DateTime?
+  actualEndDate   DateTime?
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  milestones      Milestone[]
+  files           ProjectFile[]
+  changeRequests  ChangeRequest[]
+  payments        Payment[]
+  conversation    Conversation?
+  approvals       Approval[]
+  launchChecklist LaunchChecklist?
+
+  @@index([clientId])
+  @@index([managerId])
+  @@index([status])
+}
+
+model Milestone {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Basic Info
+  title           String
+  description     String
+  status          String    @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED, BLOCKED
+  order           Int       @default(0)
+
+  // Timeline
+  expectedDate    DateTime?
+  completedDate   DateTime?
+  approvalStatus  String    @default("PENDING") // PENDING, APPROVED, CHANGES_REQUESTED
+  approvedAt      DateTime?
+  approvalComment String?
+
+  // Relations
+  projectId       String    @db.ObjectId
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  payments        Payment[]
+  approvals       Approval[]
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([projectId])
+}
+
+model ProjectFile {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // File Info
+  fileName        String
+  fileUrl         String
+  fileSize        Int
+  fileType        String
+  category        String    @default("GENERAL") // GENERAL, CONTRACT, INVOICE, WIREFRAME, UI_DESIGN, BUILD, DEPLOYMENT_CREDENTIAL, DESIGN, DOCUMENT, CODE, OTHER
+  accessLevel     String    @default("CLIENT_ADMIN") // CLIENT_ADMIN, ADMIN_ONLY
+
+  // Metadata
+  description     String?
+  uploadedById    String    @db.ObjectId
+  uploadedBy      User      @relation(fields: [uploadedById], references: [id])
+
+  // Relations
+  projectId       String    @db.ObjectId
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([projectId])
+}
+
+model ChangeRequest {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Request Info
+  title           String
+  message         String
+  status          String    @default("PENDING") // PENDING, APPROVED, REJECTED, IN_REVIEW
+  priority        String    @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  estimatedCostImpact Float?
+  timelineImpactDays Int?
+  recommendedPriority String?
+  impactSummary   String?
+
+  // Admin Response
+  adminResponse   String?
+  reviewedAt      DateTime?
+
+  // Relations
+  projectId       String    @db.ObjectId
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  clientId        String    @db.ObjectId
+  client          User      @relation(fields: [clientId], references: [id])
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([projectId])
+  @@index([clientId])
+  @@index([status])
+}
+
+model Payment {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Payment Info
+  amount          Float
+  currency        String    @default("USD")
+  description     String
+  status          String    @default("PENDING") // PENDING, PAID, OVERDUE, CANCELLED
+  isUnlocked      Boolean   @default(false)
+  unlockedAt      DateTime?
+  stripeCheckoutUrl String?
+  stripePaymentIntentId String?
+
+  // Timeline
+  dueDate         DateTime
+  paidDate        DateTime?
+
+  // Relations
+  projectId       String    @db.ObjectId
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  milestoneId     String?   @db.ObjectId
+  milestone       Milestone? @relation(fields: [milestoneId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([projectId])
+  @@index([status])
+  @@index([milestoneId])
+}
+
+model Approval {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Approval Request
+  type            String    // DESIGN, FEATURE, BUDGET, SCOPE_CHANGE, MILESTONE
+  title           String
+  description     String?
+  status          String    @default("PENDING") // PENDING, APPROVED, CHANGES_REQUESTED
+  decisionComment String?
+
+  // Relations
+  projectId       String    @db.ObjectId
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  requestedById   String    @db.ObjectId
+  requestedBy     User      @relation("ApprovalRequestedBy", fields: [requestedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  reviewedById    String?   @db.ObjectId
+  reviewedBy      User?     @relation("ApprovalReviewedBy", fields: [reviewedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  milestoneId     String?   @db.ObjectId
+  milestone       Milestone? @relation(fields: [milestoneId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // Timestamps
+  reviewedAt      DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  comments        ApprovalComment[]
+
+  @@index([projectId])
+  @@index([status])
+  @@index([type])
+}
+
+model ApprovalComment {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  approvalId      String    @db.ObjectId
+  approval        Approval  @relation(fields: [approvalId], references: [id], onDelete: Cascade)
+
+  authorId        String    @db.ObjectId
+  author          User      @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  message         String
+  createdAt       DateTime  @default(now())
+
+  @@index([approvalId])
+  @@index([authorId])
+}
+
+model LaunchChecklist {
+  id                      String    @id @default(auto()) @map("_id") @db.ObjectId
+  projectId               String    @unique @db.ObjectId
+  project                 Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  appStoreAssetsReady     Boolean   @default(false)
+  privacyPolicyVerified   Boolean   @default(false)
+  paymentGatewayTested    Boolean   @default(false)
+  analyticsIntegrated     Boolean   @default(false)
+  securityAuditCompleted  Boolean   @default(false)
+  notes                   String?
+
+  updatedById             String?   @db.ObjectId
+  updatedBy               User?     @relation("LaunchChecklistUpdatedBy", fields: [updatedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+}
+
+model Conversation {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Project Link (one conversation per project)
+  projectId     String    @unique @db.ObjectId
+  project       Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  // Tracking
+  lastMessageAt DateTime  @default(now())
+
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  messages      Message[]
+
+  @@index([lastMessageAt])
+}
+
+model MeetingRequest {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Client who requested
+  clientId          String    @db.ObjectId
+  client            User      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  // Meeting Preferences
+  preferredDate     DateTime
+  preferredTimeSlot String    // MORNING | AFTERNOON | EVENING
+  topic             String
+  notes             String?
+
+  // Status
+  status            String    @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+
+  // Admin Response
+  adminNote         String?
+  reviewedAt        DateTime?
+
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([clientId])
+  @@index([status])
+  @@index([preferredDate])
+}
+
+model Message {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Content
+  content         String
+
+  // Sender
+  senderId        String    @db.ObjectId
+  sender          User      @relation(fields: [senderId], references: [id])
+
+  // Conversation
+  conversationId  String    @db.ObjectId
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  // Read Status
+  isRead          Boolean   @default(false)
+  readAt          DateTime?
+
+  // Timestamps
+  createdAt       DateTime  @default(now())
+
+  @@index([conversationId])
+  @@index([senderId])
+  @@index([conversationId, isRead])
+}
