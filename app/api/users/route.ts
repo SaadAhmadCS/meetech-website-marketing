@@ -4,7 +4,7 @@ import { getUsers, createUser, createClientWithCode } from '@/lib/db/queries/use
 import { Resend } from 'resend'
 import { z } from 'zod'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_123456789')
 
 const createUserSchema = z.object({
   email: z.string().email('Invalid email address'),

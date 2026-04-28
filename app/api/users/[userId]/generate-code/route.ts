@@ -3,7 +3,7 @@ import { requireRole } from '@/lib/auth/middleware'
 import { getUserById, regenerateAccessCode } from '@/lib/db/queries/users'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_123456789')
 
 export async function POST(
   _request: NextRequest,
