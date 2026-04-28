@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_123456789')
 
 interface LeadNotificationData {
   name: string
@@ -86,7 +86,7 @@ export async function sendLeadNotification(lead: LeadNotificationData) {
               </div>
             </div>
             <div class="footer">
-              <p>This is an automated notification from Meetech Development website contact form.</p>
+              <p>This is an automated notification from Meetech Marketing website contact form.</p>
             </div>
           </div>
         </body>
