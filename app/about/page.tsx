@@ -477,7 +477,7 @@ export default function AboutPage() {
                 className="text-center"
               >
                 <p className="text-4xl md:text-5xl font-black tracking-tight text-accent mb-3">
-                  {useCountUp(scaleInView, item.end, item.suffix, "decimals" in item ? item.decimals : 0, reduce)}
+                                    {useCountUp(scaleInView, item.end, item.suffix, undefined, reduce)}
                 </p>
                 <p className="text-sm font-semibold text-text-muted uppercase tracking-wider">
                   {item.label}
