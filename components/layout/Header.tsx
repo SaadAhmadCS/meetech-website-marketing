@@ -14,9 +14,9 @@ function NavLink({ href, label, onClick, variant = "desktop" }: { href: string; 
   const isActive = pathname === href;
   const isMobile = variant === "mobile";
 
-  const base = "flex font-semibold tracking-tight text-[0.9375rem] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface";
+  const base = "flex font-semibold tracking-wide text-[0.86rem] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface";
   const activeStyles = isActive ? "text-accent" : "text-text-secondary hover:text-text-primary";
-  const desktopStyles = !isMobile ? `nav-link-underline inline-flex min-h-[44px] items-center justify-center px-3 py-2.5 pb-3 md:px-0 ${isActive ? "is-active" : ""}` : "";
+  const desktopStyles = !isMobile ? `nav-link-underline inline-flex min-h-[44px] items-center justify-center px-2 py-2 ${isActive ? "is-active" : ""}` : "";
   const mobileStyles = isMobile ? "min-h-[52px] w-full items-center px-5 py-4 hover:bg-bg-subtle rounded-lg" : "";
 
   return (
@@ -151,24 +151,24 @@ export function Header() {
       data-scrolled={scrolled}
       className="sticky top-0 z-50 w-full border-b border-white/5 bg-black/60 backdrop-blur transition-all duration-300 ease-out"
     >
-      <div className="relative flex h-[80px] w-full items-center justify-between px-5 lg:px-12">
+      <div className="relative grid h-[80px] w-full grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 lg:px-10">
         {/* Left: Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center justify-start">
           <Link href="/" className="flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface rounded-lg">
             <img src="/logo.svg" alt="Meetech Marketing" className="h-8 lg:h-10 w-auto transition-all duration-300 group-hover:scale-105" />
           </Link>
         </div>
 
-        {/* Right: Navigation */}
-        <nav aria-label="Primary" className="hidden md:flex items-center gap-3 lg:gap-6 mx-auto">
+        {/* Center: Navigation */}
+        <nav aria-label="Primary" className="hidden md:flex items-center justify-center gap-5 lg:gap-8">
           {NAV_LINKS.map(({ href, label }) => <NavLink key={href} href={href} label={label} />)}
         </nav>
 
-        {/* Right: Social Icons, CTA, Theme Toggle & Hamburger */}
-        <div className="flex items-center gap-2">
+        {/* Right: Actions */}
+        <div className="flex items-center justify-end gap-2">
           <Link
             href="/client/login"
-            className="hidden md:inline-flex min-h-[44px] items-center justify-center rounded-xl border-2 border-accent bg-transparent px-4 py-2 text-[0.9375rem] font-bold text-accent shadow-sm transition-all duration-200 ease-out hover:bg-accent-muted hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface whitespace-nowrap"
+            className="hidden md:inline-flex min-h-[40px] items-center justify-center rounded-xl border border-accent/70 bg-transparent px-3 py-1.5 text-[0.78rem] font-semibold text-accent shadow-sm transition-all duration-200 ease-out hover:bg-accent-muted hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface whitespace-nowrap"
           >
             Client Portal
           </Link>

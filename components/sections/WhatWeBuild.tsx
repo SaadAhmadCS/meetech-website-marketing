@@ -35,10 +35,10 @@ export function WhatWeBuild() {
             id="what-we-build-heading"
             className="text-5xl md:text-6xl font-black text-text-primary uppercase tracking-tighter leading-none"
           >
-            What we<br />Build
+            What we<br />Deliver
           </h2>
           <p className="text-lg text-text-body md:text-xl leading-relaxed">
-            Modern solutions that drive growth and scale with you.
+            Six core growth services built for measurable marketing outcomes.
           </p>
         </div>
         <motion.ul

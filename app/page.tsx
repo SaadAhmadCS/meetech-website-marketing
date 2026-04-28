@@ -25,7 +25,7 @@ export default function App() {
   ];
 
   return (
-    <div className="relative min-h-screen w-full bg-bg-page text-text-primary selection:bg-accent selection:text-text-inverse overflow-hidden font-sans transition-colors duration-500">
+    <div className="relative min-h-screen w-full overflow-x-visible overflow-y-hidden bg-bg-page font-sans text-text-primary transition-colors duration-500 selection:bg-accent selection:text-text-inverse">
       
       {/* Decorative Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-default)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-default)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20 pointer-events-none" />
@@ -129,14 +129,16 @@ export default function App() {
       </motion.section>
 
       {/* Social Proof Marquee */}
-      <section className="relative py-10 border-y border-white/5 bg-black/40 backdrop-blur-md overflow-hidden">
-        <div className="flex gap-16 whitespace-nowrap animate-[marquee_30s_linear_infinite]">
+      <section className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden border-y border-white/5 bg-black/40 py-10 backdrop-blur-md">
+        <div className="flex min-w-max gap-16 whitespace-nowrap animate-[marquee_30s_linear_infinite]">
           {[...brands, ...brands, ...brands].map((brand, i) => (
             <span key={i} className="text-2xl font-bold text-white/30 tracking-wider">
               {brand}
             </span>
           ))}
         </div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#030014] via-[#030014]/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-[#030014] via-[#030014]/70 to-transparent" />
       </section>
 
       {/* Services Preview Grid */}

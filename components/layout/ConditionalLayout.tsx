@@ -55,7 +55,7 @@ export default function ConditionalLayout({
         role="main"
         className="flex flex-1 flex-col"
       >
-        <div className="mx-auto w-full max-w-7xl flex-1">
+        <div className="w-full flex-1">
           {children}
         </div>
       </main>

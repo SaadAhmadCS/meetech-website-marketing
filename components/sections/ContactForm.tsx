@@ -33,31 +33,31 @@ interface FormErrors {
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
 const PROJECT_TYPES = [
-  "Website Development",
-  "Mobile App (iOS/Android)",
-  "E-commerce Platform",
-  "Custom Software",
-  "MVP Development",
-  "UI/UX Design",
-  "Consulting",
+  "Social Media Management",
+  "Branding + Logo",
+  "Performance Marketing (Paid Ads)",
+  "AI Automations",
+  "Search Engine Optimization (SEO + AEO)",
+  "Email Marketing",
+  "Full Marketing Strategy",
   "Other",
 ];
 
 const BUDGET_RANGES = [
-  "Under $5,000",
-  "$5,000 - $10,000",
-  "$10,000 - $25,000",
-  "$25,000 - $50,000",
-  "$50,000+",
+  "Under $2,000 / month",
+  "$2,000 - $5,000 / month",
+  "$5,000 - $10,000 / month",
+  "$10,000 - $20,000 / month",
+  "$20,000+ / month",
   "Not sure yet",
 ];
 
 const TIMELINE_OPTIONS = [
-  "ASAP (1-2 weeks)",
-  "1-2 months",
-  "3-6 months",
-  "6+ months",
-  "Flexible",
+  "ASAP (this week)",
+  "Within 2-4 weeks",
+  "Within 1-2 months",
+  "Within this quarter",
+  "Flexible / Need guidance",
 ];
 
 export function ContactForm() {
@@ -273,10 +273,11 @@ export function ContactForm() {
       <div className="mx-auto max-w-4xl">
         <div className="text-center mb-12">
           <h2 id="contact-form-heading" className="text-3xl font-bold text-text-primary md:text-4xl mb-4">
-            Tell Us About Your Project
+            Tell Us About Your Growth Goals
           </h2>
           <p className="text-lg text-text-body">
-            Fill out the form below and we'll get back to you within 24 hours
+            Share your goals and we will propose the right marketing plan within
+            24 hours
           </p>
         </div>
 
@@ -416,7 +417,7 @@ export function ContactForm() {
                 htmlFor="projectType"
                 className="block text-sm font-semibold text-text-primary mb-2"
               >
-                Project Type <span className="text-red-500">*</span>
+                  Service Needed <span className="text-red-500">*</span>
               </label>
 
               <div className="relative">
@@ -435,7 +436,9 @@ export function ContactForm() {
                       : "border-border-default focus:ring-accent"
                     } bg-bg-surface text-sm text-text-primary transition-all focus:outline-none focus:ring-2 focus:border-transparent shadow-sm hover:shadow-md appearance-none cursor-pointer`}
                 >
-                  <option className=" text-sm w-fit" value="">Select type</option>
+                  <option className=" text-sm w-fit" value="">
+                    Select service
+                  </option>
                   {PROJECT_TYPES.map((type) => (
                     <option key={type} value={type}>
                       {type}
@@ -532,7 +535,7 @@ export function ContactForm() {
             transition={{ delay: 0.45 }}
           >
             <label htmlFor="message" className="block text-sm font-semibold text-text-primary mb-2">
-              Project Details <span className="text-red-500">*</span>
+              Campaign / Growth Details <span className="text-red-500">*</span>
             </label>
             <div className="relative">
               <div className="absolute top-4 px-2 pointer-events-none">
@@ -548,7 +551,7 @@ export function ContactForm() {
                 maxLength={2000}
                 className={`block w-full pl-10 pr-4 py-3.5 rounded-xl border ${errors.message ? "border-red-500 focus:ring-red-500" : "border-border-default focus:ring-accent"
                   } bg-bg-surface text-text-primary placeholder:text-text-muted transition-all focus:outline-none focus:ring-2 focus:border-transparent shadow-sm hover:shadow-md resize-none`}
-                placeholder=" Tell us about your project goals, requirements, and any specific features you need..."
+                placeholder="Tell us about your business, goals, target audience, and current marketing challenges..."
               />
             </div>
             <div className="mt-2 flex items-center justify-between">
@@ -606,11 +609,11 @@ export function ContactForm() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  Sending Your Message...
+                  Sending Your Inquiry...
                 </>
               ) : (
                 <>
-                  Send Message
+                  Submit Growth Inquiry
                   <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -637,7 +640,8 @@ export function ContactForm() {
                     Submission Failed
                   </h3>
                   <p className="mt-1 text-sm text-red-700 dark:text-red-400">
-                    An error occurred while sending your message. Please try again or contact us directly at contact@meetech.com
+                    An error occurred while sending your message. Please try
+                    again or contact us directly at hello@meetechmarketing.com
                   </p>
                 </div>
               </div>

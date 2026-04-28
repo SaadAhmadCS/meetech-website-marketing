@@ -13,20 +13,20 @@ const DURATION = 0.5;
 
 const PILLARS = [
   {
-    title: "Execution",
-    body: "We ship on time. Clear milestones, defined deliverables, and no scope creep. Our track record speaks for itself.",
+    title: "Strategy",
+    body: "Every campaign starts with clear audience research, positioning, and conversion goals before execution begins.",
   },
   {
-    title: "Systems",
-    body: "Rigorous processes from discovery to deployment. Version control, testing, and documentation are non-negotiable.",
+    title: "Performance",
+    body: "We optimize continuously using data from creative tests, funnel behavior, and campaign economics.",
   },
   {
-    title: "People",
-    body: "Senior engineers and designers who care about craft. Low turnover, high accountability, direct communication.",
+    title: "Creative",
+    body: "Brand design and campaign assets are built to stand out while staying aligned with measurable outcomes.",
   },
   {
-    title: "Standards",
-    body: "Security, accessibility, and performance baked in. We build for production, not demos.",
+    title: "Partnership",
+    body: "You work directly with a focused team that communicates clearly, reports transparently, and executes fast.",
   },
 ] as const;
 
@@ -68,26 +68,26 @@ const TRUST_SIGNALS = [
 
 const SCALE = [
   { end: 12, suffix: "+", label: "Countries" },
-  { end: 50, suffix: "+", label: "Enterprise clients" },
-  { end: 99.9, suffix: "%", label: "Uptime SLA", decimals: 1 },
-  { end: 24, suffix: "/7", label: "Support coverage" },
+  { end: 50, suffix: "+", label: "Brands scaled" },
+  { end: 300, suffix: "+", label: "Campaigns launched" },
+  { end: 24, suffix: "/7", label: "Optimization mindset" },
 ] as const;
 
 const TESTIMONIALS = [
   {
-    quote: "They delivered on time, within budget, and the system has run flawlessly since launch. No surprises.",
-    author: "Sarah Chen",
-    title: "CTO, FinScale",
+    quote: "Our lead quality improved in the first month. The strategy was clear and the execution was sharp.",
+    author: "Sarah Khan",
+    title: "Founder, Bloom Aesthetics",
   },
   {
-    quote: "Professional from day one. Clear communication, solid architecture, and a team that actually listens.",
-    author: "James Okonkwo",
-    title: "Head of Product, TradeFlow",
+    quote: "They rebuilt our brand and paid media approach. Results became predictable, not random.",
+    author: "James Okoro",
+    title: "Director, Nova Retail",
   },
   {
-    quote: "We needed a partner who could scale with us. They did. The platform handles 10x our initial load without a hiccup.",
-    author: "Maria Santos",
-    title: "CEO, HealthBridge",
+    quote: "From SEO to automations, everything now works like one connected growth engine.",
+    author: "Maria Silva",
+    title: "CEO, Mediva Clinics",
   },
 ] as const;
 
@@ -244,7 +244,8 @@ export default function AboutPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-2xl text-lg md:text-xl text-text-body leading-relaxed"
         >
-          We build, launch, and scale high-performing digital marketing campaigns. Our mission is to dominate your market with data-driven strategy and creative excellence.
+          We help brands grow through strategy-led marketing, standout creative,
+          and continuous optimization across channels.
         </motion.p>
 
         {/* Key Values - Simple Text */}
@@ -323,7 +324,8 @@ export default function AboutPage() {
               {TRUST_HEADLINE}
             </h2>
             <p className="text-lg text-text-body max-w-2xl mx-auto">
-              From startups to enterprises, we deliver production-grade solutions that scale globally.
+              From startups to established companies, we build practical growth
+              systems designed for real business outcomes.
             </p>
           </div>
 
@@ -365,11 +367,11 @@ export default function AboutPage() {
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-accent" />
-              <span>SOC2 & GDPR Compliant</span>
+                <span>Creative + media aligned</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-accent" />
-              <span>24/7 Support Coverage</span>
+                <span>Weekly performance clarity</span>
             </div>
           </motion.div>
         </motion.section>
@@ -388,7 +390,8 @@ export default function AboutPage() {
               What makes us #1
             </h2>
             <p className="text-lg text-text-body max-w-2xl mx-auto">
-              Execution, systems, people, and standards. We don't cut corners.
+              Strategy, performance, creativity, and partnership. No fluff,
+              only forward momentum.
             </p>
           </div>
 
@@ -396,23 +399,23 @@ export default function AboutPage() {
           <div className="grid gap-16 sm:grid-cols-2 max-w-4xl mx-auto">
             {PILLARS.map(({ title, body }, index) => {
               const icons = {
-                Execution: (
+                Strategy: (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 ),
-                Systems: (
+                Performance: (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 ),
-                People: (
+                Creative: (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 ),
-                Standards: (
+                Partnership: (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
@@ -459,7 +462,8 @@ export default function AboutPage() {
               Global presence & scale
             </h2>
             <p className="text-lg text-text-body max-w-2xl mx-auto">
-              We serve clients across regions. Our infrastructure and support reflect that.
+              We support brands across regions with growth systems that are
+              consistent, measurable, and scalable.
             </p>
           </div>
 
@@ -497,7 +501,8 @@ export default function AboutPage() {
               Team & leadership philosophy
             </h2>
             <p className="text-lg text-text-body max-w-2xl mx-auto">
-              Founder-led. Structured teams. Clear ownership.
+              Lean teams, clear ownership, and direct communication at every
+              stage.
             </p>
           </div>
 
@@ -520,7 +525,8 @@ export default function AboutPage() {
                     Leadership Close to Delivery
                   </h3>
                   <p className="text-base leading-relaxed text-text-body">
-                    Our leadership sets direction and stays close to delivery. We don't hide behind layers. Decisions are made by people who understand both the business and the code.
+                    Senior strategists stay close to execution so decisions are
+                    fast, practical, and tied to business priorities.
                   </p>
                 </div>
               </div>
@@ -543,7 +549,9 @@ export default function AboutPage() {
                     Accountable Cross-Functional Teams
                   </h3>
                   <p className="text-base leading-relaxed text-text-body">
-                    Teams are small, cross-functional, and accountable. Everyone knows who owns what. We hire for craft and fit, and we retain by doing work that matters.
+                    Our specialists across creative, paid media, and
+                    automation work as one unit with shared KPIs and clear
+                    accountability.
                   </p>
                 </div>
               </div>

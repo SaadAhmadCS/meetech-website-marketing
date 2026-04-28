@@ -35,7 +35,7 @@ const footerLinks: FooterGroup[] = [
   {
     title: "Contact",
     links: [
-      { name: "info@meetechdevelopment.com", href: "mailto:info@meetechdevelopment.com" },
+      { name: "hello@meetechmarketing.com", href: "mailto:hello@meetechmarketing.com" },
       { name: "+1 334 926 9060", href: "tel:+1 334 926 9060" },
       { name: "United States", href: "https://www.google.com/maps?q=United+States" },
     ],
