@@ -35,7 +35,7 @@ const footerLinks: FooterGroup[] = [
   {
     title: "Contact",
     links: [
-      { name: "hello@meetechmarketing.com", href: "mailto:hello@meetechmarketing.com" },
+      { name: "hello@meetechsolution.com", href: "mailto:hello@meetechsolution.com" },
       { name: "+1 334 926 9060", href: "tel:+1 334 926 9060" },
       { name: "United States", href: "https://www.google.com/maps?q=United+States" },
     ],
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
             <Link href="/" className="flex items-center group w-fit">
               <img
                 src="/logo.svg"
-                alt="Meetech Marketing"
+                alt="Meetech Solution"
                 className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
               />
             </Link>
@@ -177,7 +177,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border-default pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-text-muted text-xs font-medium tracking-wide">
-            Meetech Marketing, © 2026
+            Meetech Solution, © 2026
           </p>
 
           <div className="flex items-center gap-6">

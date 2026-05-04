@@ -155,7 +155,7 @@ export function Header() {
         {/* Left: Logo */}
         <div className="flex items-center justify-start">
           <Link href="/" className="flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface rounded-lg">
-            <img src="/logo.svg" alt="Meetech Marketing" className="h-8 lg:h-10 w-auto transition-all duration-300 group-hover:scale-105" />
+            <img src="/logo.svg" alt="Meetech Solution" className="h-8 lg:h-10 w-auto transition-all duration-300 group-hover:scale-105" />
           </Link>
         </div>
 

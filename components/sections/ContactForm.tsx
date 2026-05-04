@@ -641,7 +641,7 @@ export function ContactForm() {
                   </h3>
                   <p className="mt-1 text-sm text-red-700 dark:text-red-400">
                     An error occurred while sending your message. Please try
-                    again or contact us directly at hello@meetechmarketing.com
+                    again or contact us directly at hello@meetechsolution.com
                   </p>
                 </div>
               </div>

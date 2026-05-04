@@ -234,7 +234,7 @@ export default function AboutPage() {
           transition={{ duration: 0.8 }}
           className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4"
         >
-          About <span className="text-accent">Meetech Marketing</span>
+          About <span className="text-accent">Meetech Solution</span>
         </motion.h1>
 
         {/* Subheading */}
